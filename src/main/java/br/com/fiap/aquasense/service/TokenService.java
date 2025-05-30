@@ -18,9 +18,10 @@ public class TokenService {
 
     public Token createToken(Usuario usuario) {
         var jwt = JWT.create()
-                .withSubject(usuario.getUsername())
+                .withSubject(usuario.getIdUsuario().toString())
                 .withClaim("username", usuario.getUsername())
-                .withClaim("password", usuario.getPassword())
+                .withClaim("email", usuario.getEmail())
+                .withClaim("role", usuario.getRole().toString())
                 .withExpiresAt(expiresAt)
                 .sign(algorithm);
 

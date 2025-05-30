@@ -19,7 +19,6 @@ public class Telefone {
     private String ddd;
     private String numero;
     private String tipo;
-
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
