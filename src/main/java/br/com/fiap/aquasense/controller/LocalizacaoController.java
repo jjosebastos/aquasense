@@ -27,7 +27,7 @@ public class LocalizacaoController {
     @CacheEvict("localizacao")
     @Operation(summary = "Criação de localizaçao.", description = "Criar localizações de um usuário.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Cadastro concluído com sucesso"),
+                    @ApiResponse(responseCode = "201", description = "Cadastro concluído com sucesso"),
                     @ApiResponse(responseCode = "400", description = "Requisição inválida"),
                     @ApiResponse(responseCode = "404", description = "Registro não encontrado")
             })
@@ -80,7 +80,7 @@ public class LocalizacaoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Remover localizaçao.", description = "Remoção de localização de um usuário.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Concluído com sucesso"),
+                    @ApiResponse(responseCode = "204", description = "Concluído com sucesso"),
                     @ApiResponse(responseCode = "400", description = "Requisição inválida"),
                     @ApiResponse(responseCode = "404", description = "Registro não encontrado")
             })

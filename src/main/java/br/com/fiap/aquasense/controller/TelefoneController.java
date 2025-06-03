@@ -51,7 +51,7 @@ public class TelefoneController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Atualização telefones.", description = "Atualizar telefone com base no ID.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Atualização concluida com sucesso"),
+                    @ApiResponse(responseCode = "204", description = "Atualização concluida com sucesso"),
                     @ApiResponse(responseCode = "400", description = "Requisição inválida"),
                     @ApiResponse(responseCode = "404", description = "Registro não encontrado")
             })
