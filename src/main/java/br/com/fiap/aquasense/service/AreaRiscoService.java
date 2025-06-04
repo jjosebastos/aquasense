@@ -4,6 +4,7 @@ import br.com.fiap.aquasense.dto.request.AreaRiscoRequest;
 import br.com.fiap.aquasense.dto.response.AreaRiscoResponse;
 import br.com.fiap.aquasense.model.AreaRisco;
 import br.com.fiap.aquasense.repository.AreaRiscoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class AreaRiscoService {
     @Autowired
     private AreaRiscoRepository areaRiscoRepository;
 
+    @Transactional
     public AreaRiscoResponse save(AreaRiscoRequest areaRiscoRequest) {
         var areaRisco = new AreaRisco();
         areaRisco.setNome(areaRiscoRequest.getNome());
@@ -26,6 +28,7 @@ public class AreaRiscoService {
         return toAreaRiscoResponse(savedAreaRisco);
     }
 
+    @Transactional
     public AreaRiscoResponse update(Long idAreaRisco, AreaRiscoRequest areaRiscoRequest) {
         var areaRiscoFound = getAreaRiscoById(idAreaRisco);
         areaRiscoFound.setNome(areaRiscoRequest.getNome());
@@ -36,6 +39,7 @@ public class AreaRiscoService {
         return toAreaRiscoResponse(updatedAreaRisco);
     }
 
+    @Transactional
     public void deleteById(Long idAreaRisco) {
         var areaRiscoFound = getAreaRiscoById(idAreaRisco);
         areaRiscoFound.setFlagAtivo("N");
