@@ -27,4 +27,5 @@ public class AreaRisco {
     private NivelRisco nivelRisco;
     private LocalDateTime dataAtualizacao;
     private String flagAtivo;
+
 }
