@@ -64,7 +64,7 @@ public class EventoAlertaController {
     @GetMapping("/all")
     @Operation(summary = "Busca Eventos Alertas.", description = "Buscar todas os alertas de desastre natural.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Busca concluída com sucesso"),
+                    @ApiResponse(responseCode = "200", description = " concluída com sucesso"),
                     @ApiResponse(responseCode = "404", description = "Registro não encontrado")
             })
     public ResponseEntity<List<EventoAlertaResponse>> getAll() {
