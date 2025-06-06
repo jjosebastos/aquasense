@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ public class EventoAlertaService {
         var areaRiscoFound = this.getAreaRiscoById(request.getIdAreaRisco());
         var eventoAlerta = new EventoAlerta();
         eventoAlerta.setMensagem(request.getMensagem());
-        eventoAlerta.setDataHoraGeracao(request.getDataHoraGeracao());
+        eventoAlerta.setDataHoraGeracao(LocalDateTime.now());
         eventoAlerta.setFonteDados(request.getFonteDados());
         eventoAlerta.setNivelRisco(request.getNivelRisco());
         eventoAlerta.setAreaRisco(areaRiscoFound);
@@ -35,10 +36,13 @@ public class EventoAlertaService {
 
     @Transactional
     public EventoAlertaResponse update(Long idEventoAlerta, EventoAlertaRequest request) {
-        var eventoAlertaFound = this.getEventoAlertaById(idEventoAlerta);
+        var eventoAlertaFound = this.eventoAlertaRepository.findById(idEventoAlerta).orElseThrow();
+        var areaRiscoFound = this.getAreaRiscoById(request.getIdAreaRisco());
         eventoAlertaFound.setMensagem(request.getMensagem());
+        eventoAlertaFound.setDataHoraGeracao(LocalDateTime.now());
         eventoAlertaFound.setFonteDados(request.getFonteDados());
         eventoAlertaFound.setNivelRisco(request.getNivelRisco());
+        eventoAlertaFound.setAreaRisco(areaRiscoFound);
         eventoAlertaFound.setAreaRisco(this.getAreaRiscoById(request.getIdAreaRisco()));
         var updatedEventoAlerta = this.eventoAlertaRepository.save(eventoAlertaFound);
         return toEventoAlertaResponse(updatedEventoAlerta);

@@ -18,8 +18,6 @@ import java.time.LocalDateTime;
 @Setter
 public class EventoAlertaRequest {
 
-    @NotNull @PastOrPresent
-    private LocalDateTime dataHoraGeracao;
     @NotNull @Size(min = 1, max = 200)
     private String mensagem;
     @NotNull

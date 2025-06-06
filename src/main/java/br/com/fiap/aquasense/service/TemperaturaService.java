@@ -62,7 +62,6 @@ public class TemperaturaService {
                     .temperatura(apiTemperatura.getCurrent().getTemp())
                     .umidade(apiTemperatura.getCurrent().getHumidity())
                     .pressao(apiTemperatura.getCurrent().getPressure())
-                    .dataRegistro(LocalDateTime.ofInstant(Instant.ofEpochSecond(apiTemperatura.getCurrent().getDt()), ZoneOffset.UTC))
                     .localizacao(localizacaoFound)
                     .build();
             Temperatura savedTemperatura = this.temperaturaRepository.save(temperaturaEntity);
@@ -85,7 +84,6 @@ public class TemperaturaService {
                 .pressao(temperatura.getPressao())
                 .umidade(temperatura.getUmidade())
                 .temperatura(temperatura.getTemperatura())
-                .dataRegistro(temperatura.getDataRegistro())
                 .idLocalizacao(temperatura.getLocalizacao().getIdLocalizacao())
                 .build();
     }

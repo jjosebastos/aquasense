@@ -19,4 +19,5 @@ public class AreaRiscoResponse {
     private TipoRisco tipoRisco;
     private NivelRisco nivelRisco;
     private LocalDateTime dataAtualizacao;
+    private Long idLocalizacao;
 }

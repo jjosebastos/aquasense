@@ -16,13 +16,21 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "t_as_localizacao")
 public class Localizacao {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_localizacao")
     private Long idLocalizacao;
+    @Column(name = "nm_local")
     private String nome;
+    @Column(name = "vl_latitude")
     private Double latitude;
+    @Column(name = "vl_longitude")
     private Double longitude;
+    @Column(name = "dt_ultima_atualizacao")
     private LocalDateTime dataUltimaAtualizacao;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "st_localizacao")
     private StatusLocalizacao status;
 
     @ManyToOne

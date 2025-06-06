@@ -13,13 +13,17 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "t_as_temperatura")
 public class Temperatura {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_temperatura")
     private Long idTemperatura;
-    private LocalDateTime dataRegistro;
+    @Column(name = "vl_temperatura")
     private Double temperatura;
+    @Column(name = "vl_umidade")
     private int umidade;
+    @Column(name = "vl_pressao")
     private int pressao;
 
     @ManyToOne
