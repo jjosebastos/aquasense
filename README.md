@@ -1,131 +1,144 @@
----
-
-## AquaSense: Monitoramento e Análise de Áreas de Risco
+Claro! Aqui está uma versão mais elegante e visualmente aprimorada do seu README, com melhor organização, uso de ícones, títulos estilizados e uma escrita mais fluida e atraente — sem perder o caráter técnico e informativo:
 
 ---
 
-### Visão Geral
-
-O **AquaSense** é uma solução abrangente projetada para monitorar e analisar áreas de risco na cidade de São Paulo, focando em eventos críticos como **alagamentos**, **desmoronamentos** e problemas de **trânsito**. Através da combinação de inteligência artificial e um robusto backend, o sistema extrai e consolida informações vitais de diversas fontes. Isso permite a apresentação de dados estruturados que são cruciais para a tomada de decisões rápidas e a implementação de ações preventivas.
+# 🌊 AquaSense: Monitoramento e Análise de Áreas de Risco
 
 ---
 
-### Tecnologias Essenciais
+## 🧭 Visão Geral
 
-O AquaSense é construído sobre um stack tecnológico moderno e eficiente, combinando as capacidades do Spring Boot para o backend com a inteligência artificial do Google Gemini para análise de dados e a integração com a OpenWeather API para informações climáticas.
+**AquaSense** é uma solução inteligente e robusta para o monitoramento e análise de áreas de risco na cidade de **São Paulo**, com foco em eventos críticos como:
 
-#### Backend (Java com Spring Boot)
+* 🌧️ Alagamentos
+* 🧱 Desmoronamentos
+* 🚧 Problemas de Trânsito
 
-* **Java 17+:** A linguagem de programação principal, escolhida por sua performance, estabilidade e amplo suporte da comunidade.
-* **Spring Boot 3.x:** Um framework que simplifica o desenvolvimento e deploy de aplicações Java, provendo uma base sólida para microsserviços.
-    * **Spring Data JPA:** Facilita a interação com bancos de dados relacionais através da especificação JPA.
-    * **Lombok:** Reduz a verbosidade do código Java, automatizando a criação de getters, setters e construtores.
-    * **WebClient (Spring WebFlux):** Cliente HTTP reativo essencial para a comunicação assíncrona com APIs externas.
-    * **Scheduled Tasks:** Funcionalidade para agendamento de tarefas em segundo plano, como a limpeza de dados e atualização de informações climáticas.
-    * **Logback (SLF4J):** Um framework de logging eficaz para monitoramento e depuração da aplicação.
-* **Hibernate 6.x:** A implementação ORM (Object-Relational Mapping) do JPA, responsável por mapear objetos Java para o banco de dados.
-* **Jackson:** Biblioteca fundamental para a serialização e desserialização de dados JSON, crucial para a comunicação com APIs externas e a própria API REST da aplicação.
-* **MySQL Connector/J:** O driver JDBC que permite a conexão entre o Spring Boot e o banco de dados MySQL.
-* **Maven:** A ferramenta padrão de automação de build para gerenciar dependências e o ciclo de vida do projeto.
-
-#### Inteligência Artificial e Dados Externos
-
-* **Google Gemini API:** Utilizada para processamento de linguagem natural (NLP). Extrai insights e informações críticas de textos não estruturados (como notícias e redes sociais) para identificar e categorizar áreas de risco. Atua como um "agente de análise de riscos" virtual.
-* **OpenWeather API:** Fornece dados climáticos em tempo real, incluindo temperatura, para as coordenadas geográficas das áreas monitoradas. Essa integração enriquece a análise de riscos com informações contextuais sobre as condições meteorológicas.
-
-#### Banco de Dados
-
-* **MySQL:** Escolhido como o sistema de gerenciamento de banco de dados relacional para persistência, integridade e escalabilidade dos dados do AquaSense.
+Combinando **Inteligência Artificial**, **dados climáticos em tempo real** e um **backend moderno**, o sistema coleta, processa e apresenta informações estratégicas de diversas fontes. Isso permite tomadas de decisão mais rápidas e eficazes, além da implementação de **ações preventivas** por parte das autoridades.
 
 ---
 
-### Estrutura do Projeto
+## 🛠️ Tecnologias Utilizadas
 
-O AquaSense adota uma arquitetura em camadas, com DTOs (Data Transfer Objects) que asseguram uma comunicação clara e eficiente entre as diferentes partes da aplicação e com as APIs externas:
+### 🔙 Backend — *Java com Spring Boot*
 
-* **`model/`:** Contém as **entidades JPA** (`AreaRisco`), que representam diretamente a estrutura das tabelas no banco de dados.
-* **`model/dto/`:** Classes **DTO** (`AreaRiscoData`, `AreaRiscoRequest`, `AreaRiscoResponse`, e DTOs específicos da OpenWeather API) para gerenciar o fluxo de dados de entrada e saída.
-* **`repository/`:** Interfaces de **repositório** (`AreaRiscoRepository`) que estendem o Spring Data JPA, simplificando as operações de persistência e consulta.
-* **`service/`:** A camada de **lógica de negócio** (`AreaRiscoService`, `GeminiAIService`, `OpenWeatherService`), onde as regras de negócio são aplicadas e a interação com os repositórios e APIs externas ocorre.
-* **`controller/`:** Define os **endpoints da API REST**, atuando como a interface de comunicação da aplicação.
-* **`config/`:** Pacote dedicado a **classes de configuração** da aplicação, incluindo as para as APIs externas.
+| Tecnologia              | Descrição                                                          |
+| ----------------------- | ------------------------------------------------------------------ |
+| **Java 17+**            | Base da aplicação, reconhecida por sua performance e estabilidade. |
+| **Spring Boot 3.x**     | Framework que acelera o desenvolvimento de microsserviços.         |
+| → `Spring Data JPA`     | Facilita a integração com bancos de dados relacionais.             |
+| → `Lombok`              | Reduz a verbosidade com anotações automáticas.                     |
+| → `WebClient (WebFlux)` | Cliente reativo para chamadas assíncronas a APIs.                  |
+| → `Scheduled Tasks`     | Agendamentos de tarefas automáticas (ex: limpeza de dados).        |
+| → `Logback (SLF4J)`     | Framework de logs para rastreamento da aplicação.                  |
+| **Hibernate 6.x**       | Implementação JPA para mapeamento objeto-relacional.               |
+| **Jackson**             | Serialização/desserialização de JSONs.                             |
+| **MySQL Connector/J**   | Driver JDBC para integração com MySQL.                             |
+| **Maven**               | Gerenciador de dependências e automação de builds.                 |
 
----
+### 🤖 Inteligência Artificial e APIs Externas
 
-### Como Executar o Projeto
+* **🔮 Google Gemini API:**
+  Processamento de linguagem natural para extrair *insights* de textos não estruturados (notícias, redes sociais etc.), funcionando como um agente virtual de risco.
 
-Para colocar o AquaSense em funcionamento, siga estas etapas:
+* **☁️ OpenWeather API:**
+  Dados climáticos em tempo real, como temperatura e condição atmosférica, integrados à análise contextual das regiões monitoradas.
 
-1.  **Clone o Repositório:**
-    ```bash
-    git clone [URL_DO_SEU_REPOSITORIO]
-    cd aquasense
-    ```
-2.  **Configurar o Banco de Dados MySQL:**
-    * Certifique-se de ter uma instância do **MySQL Server** instalada e em execução.
-    * Crie um banco de dados dedicado para o AquaSense (ex: `CREATE DATABASE aquasense_db;`).
-    * Crie um usuário com permissões de acesso a este banco de dados.
-3.  **Configurar Chaves de API e Propriedades:**
-    * Obtenha sua chave de API do **Google Gemini**.
-    * Obtenha sua chave de API do **OpenWeatherMap**.
-    * Atualize o arquivo `src/main/resources/application.properties` (ou `application.yml`) com as configurações do MySQL e suas chaves de API:
+### 🗄️ Banco de Dados
 
-    ```properties
-    # application.properties
-
-    # Configurações do MySQL
-    spring.datasource.url=jdbc:mysql://localhost:3306/aquasense_db?useSSL=false&serverTimezone=UTC
-    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-    spring.datasource.username=seu_usuario_mysql
-    spring.datasource.password=sua_senha_mysql
-
-    # Configurações do JPA/Hibernate
-    spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
-    spring.jpa.hibernate.ddl-auto=update # Sugerido para desenvolvimento. Para produção, use 'validate' ou Flyway/Liquibase.
-    spring.jpa.show-sql=true
-    spring.jpa.properties.hibernate.format_sql=true
-
-    # Configurações do Google Gemini API
-    gemini.api.key=SUA_CHAVE_GEMINI_AQUI
-
-    # Configurações da OpenWeather API
-    openweather.api.key=SUA_CHAVE_OPENWEATHER_AQUI
-    openweather.api.base-url=https://api.openweathermap.org/data/2.5/weather
-    openweather.api.units=metric # ou 'imperial'
-    ```
-4.  **Adicionar Dependências Necessárias:**
-    * Certifique-se de que seu `pom.xml` inclui as dependências para o **MySQL Connector/J** e **Spring WebFlux** (para o `WebClient`):
-
-    ```xml
-    <dependencies>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version> </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
-
-        </dependencies>
-    ```
-
-5.  **Compilar e Iniciar a Aplicação:**
-    ```bash
-    mvn clean install
-    mvn spring-boot:run
-    ```
-    Alternativamente, você pode executar a classe principal `AquasenseApplication.java` diretamente do seu IDE.
-
-A aplicação será iniciada, conectando-se ao MySQL e gerenciando o schema do banco de dados conforme suas entidades. A partir daí, você poderá interagir com a API REST pelos endpoints definidos.
+* **🛢️ MySQL:**
+  Sistema relacional escolhido por sua confiabilidade, escalabilidade e integração nativa com Spring.
 
 ---
 
-### Membros da Equipe
+## 🧱 Estrutura do Projeto
 
-* **Nicolas Dobbeck**
-* **Jose Bezerra Bastos Neto**
-* **Thiago Henry**
+Organizado em camadas para garantir **escalabilidade**, **modularidade** e **manutenibilidade**:
+
+```
+aquasense/
+├── model/              → Entidades JPA (ex: AreaRisco)
+├── model/dto/          → Objetos de transferência de dados (DTOs)
+├── repository/         → Interfaces de repositório com Spring Data
+├── service/            → Lógica de negócio e integração com APIs externas
+├── controller/         → Endpoints REST (interface com o usuário/sistemas)
+└── config/             → Arquivos de configuração e integrações externas
+```
 
 ---
+
+## ▶️ Como Executar o Projeto
+
+### 1. 🔽 Clone o Repositório
+
+```bash
+git clone [URL_DO_REPOSITORIO]
+cd aquasense
+```
+
+### 2. 🧰 Configure o Banco de Dados
+
+* Crie um banco no MySQL:
+
+  ```sql
+  CREATE DATABASE aquasense_db;
+  ```
+* Crie um usuário com permissões apropriadas.
+
+### 3. 🔑 Configure as Chaves de API
+
+Edite o arquivo `src/main/resources/application.properties`:
+
+```properties
+# Banco de Dados
+spring.datasource.url=jdbc:mysql://localhost:3306/aquasense_db?useSSL=false&serverTimezone=UTC
+spring.datasource.username=seu_usuario
+spring.datasource.password=sua_senha
+
+# Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# APIs Externas
+gemini.api.key=SUA_CHAVE_GEMINI
+openweather.api.key=SUA_CHAVE_OPENWEATHER
+openweather.api.base-url=https://api.openweathermap.org/data/2.5/weather
+openweather.api.units=metric
+```
+
+### 4. 📦 Adicione Dependências ao `pom.xml`
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.33</version>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-webflux</artifactId>
+  </dependency>
+  <!-- Outras dependências necessárias... -->
+</dependencies>
+```
+
+### 5. 🚀 Execute a Aplicação
+
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+
+Ou inicie diretamente pela `AquasenseApplication.java` em sua IDE favorita.
+
+---
+
+## 👥 Equipe
+
+* 👨‍💻 **Nicolas Dobbeck**
+* 👨‍💻 **Jose Bezerra Bastos Neto**
+* 👨‍💻 **Thiago Henry**
+
+---
+
