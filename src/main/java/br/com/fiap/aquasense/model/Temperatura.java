@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
+@Table(name = "T_AS_TEMPERATURA")
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_as_temperatura")
+
 public class Temperatura {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

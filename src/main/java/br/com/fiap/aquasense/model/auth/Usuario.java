@@ -20,11 +20,12 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Table(name = "t_as_usuario")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_as_usuario")
+
 public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

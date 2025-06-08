@@ -12,11 +12,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "T_AS_LOCALIZACAO")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "t_as_localizacao")
+
 public class Localizacao {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_localizacao")

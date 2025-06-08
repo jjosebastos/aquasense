@@ -12,19 +12,19 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "T_AS_AREA_RISCO")
-@Data // Gera getters, setters, toString, equals e hashCode
-@NoArgsConstructor // Construtor sem argumentos
-@AllArgsConstructor // Construtor com todos os argumentos
-@Builder // Padrão de projeto Builder para criação de objetos
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AreaRisco {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incremento para H2/MySQL
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_area_risco")
     private Long idAreaRisco;
 
     @Column(name = "nm_area", nullable = false, length = 100)
-    private String nomeArea; // Nome da área de risco específica, agora como nm_area
+    private String nomeArea;
 
     @Column(name = "tp_risco", nullable = false, length = 15)
     @Enumerated(EnumType.STRING)

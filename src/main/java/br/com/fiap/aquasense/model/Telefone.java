@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
+@Table(name = "T_AS_TELEFONE")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "t_as_telefone")
 public class Telefone {
 
     @Id

@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
+@Table(name = "T_AS_EVENTO_ALERTA")
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "T_AS_EVENTO_ALERTA")
+
 public class EventoAlerta {
 
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
