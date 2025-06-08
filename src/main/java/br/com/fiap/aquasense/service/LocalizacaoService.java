@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class LocalizacaoService {
@@ -36,29 +38,7 @@ public class LocalizacaoService {
         return toLocalizacaoResponse(localizacaoSaved);
     }
 
-    @Transactional
-    public LocalizacaoResponse update(@PathVariable Long id,
-                                      @RequestBody LocalizacaoRequest request) {
-        var localizacaoFound = this.localizacaoRepository.findById(id)
-                .orElseThrow();
-        var usuarioFound = this.usuarioRepository.findById(request.getIdUsuario())
-                .orElseThrow();
-        localizacaoFound.setNome(request.getNome());
-        localizacaoFound.setLatitude(request.getLatitude());
-        localizacaoFound.setLongitude(request.getLongitude());
-        localizacaoFound.setDataUltimaAtualizacao(request.getDataUltimaAtualizacao());
-        localizacaoFound.setStatus(request.getStatus());
-        localizacaoFound.setUsuario(usuarioFound);
-        var localizacaoSaved = this.localizacaoRepository.save(localizacaoFound);
-        return toLocalizacaoResponse(localizacaoSaved);
-    }
 
-    @Transactional
-    public void delete(@PathVariable Long id) {
-        var localizacaoFound = this.localizacaoRepository.findById(id)
-                .orElseThrow();
-        this.localizacaoRepository.deleteById(id);
-    }
 
     public LocalizacaoResponse findById(@PathVariable Long id) {
         var localizacao = this.localizacaoRepository.findById(id)
