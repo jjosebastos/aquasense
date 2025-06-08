@@ -3,6 +3,8 @@ package br.com.fiap.aquasense.controller;
 import br.com.fiap.aquasense.dto.response.TemperaturaApiResponse;
 import br.com.fiap.aquasense.dto.response.TemperaturaResponse;
 import br.com.fiap.aquasense.service.TemperaturaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,10 @@ public class TemperaturaController {
     private TemperaturaService temperaturaService;
 
     @GetMapping("/{latitude}/{longitude}")
+    @Operation(summary = "Busca de temperaturas.", description = "Busca temperatura de usuarios com base na latitude, longitude.",
+    responses = {
+            @ApiResponse(responseCode = "200", description = "Encontrado com sucesso.")
+    })
     public ResponseEntity<TemperaturaApiResponse> getTemperatura(
             @PathVariable("latitude") double lat,
             @PathVariable("longitude") double lon) {
@@ -27,6 +33,7 @@ public class TemperaturaController {
     return ResponseEntity.ok(temperatura);
 
     }
+
 
     @PostMapping("/{latitude}/{longitude}/{idLocalizacao}")
     public ResponseEntity<TemperaturaResponse> postTemperatura(
