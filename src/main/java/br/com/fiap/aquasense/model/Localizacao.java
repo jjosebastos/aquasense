@@ -2,7 +2,6 @@ package br.com.fiap.aquasense.model;
 
 import br.com.fiap.aquasense.model.auth.Usuario;
 import br.com.fiap.aquasense.model.enums.StatusLocalizacao;
-import ch.qos.logback.core.status.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,19 +15,24 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "t_as_localizacao")
+@Table(name = "T_AS_LOCALIZACAO")
 public class Localizacao {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_localizacao")
     private Long idLocalizacao;
+
     @Column(name = "nm_local")
     private String nome;
-    @Column(name = "vl_latitude")
-    private Double latitude;
+
+    @Column(name = "vl_atitude") 
+    private Double latitude; 
+
     @Column(name = "vl_longitude")
     private Double longitude;
+
     @Column(name = "dt_ultima_atualizacao")
     private LocalDateTime dataUltimaAtualizacao;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "st_localizacao")
     private StatusLocalizacao status;
@@ -36,5 +40,4 @@ public class Localizacao {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-
 }
