@@ -50,9 +50,7 @@ public class TemperaturaService {
 
             TemperaturaApiResponse apiTemperatura = this.getTemperatura(latitude, longitude);
 
-            if(localizacaoFound.getLatitude() != latitude && localizacaoFound.getLongitude() != longitude) {
-                throw new IllegalStateException();
-            }
+
             if (apiTemperatura == null || apiTemperatura.getCurrent() == null) {
                 throw new IllegalStateException();
             }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@Table(name = "T_AS_EVENTO_ALERTA")
+@Table(name = "t_as_evento_alerta")
 @Entity
 @Builder
 @AllArgsConstructor

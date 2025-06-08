@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "T_AS_AREA_RISCO")
+@Table(name = "t_as_area_risco")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

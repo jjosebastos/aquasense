@@ -1,7 +1,5 @@
 package br.com.fiap.aquasense.specification;
 
-import br.com.fiap.aquasense.model.AreaRisco;
-import br.com.fiap.aquasense.model.AreaRiscoFilter;
 import br.com.fiap.aquasense.model.Localizacao;
 import br.com.fiap.aquasense.model.LocalizacaoFilter;
 import jakarta.persistence.criteria.Predicate;
