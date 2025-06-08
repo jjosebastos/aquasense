@@ -2,12 +2,22 @@ package br.com.fiap.aquasense.controller;
 
 import br.com.fiap.aquasense.dto.request.AreaRiscoRequest;
 import br.com.fiap.aquasense.dto.response.AreaRiscoResponse;
+import br.com.fiap.aquasense.model.AreaRisco;
+import br.com.fiap.aquasense.model.AreaRiscoFilter;
+import br.com.fiap.aquasense.model.Localizacao;
+import br.com.fiap.aquasense.repository.AreaRiscoRepository;
+import br.com.fiap.aquasense.repository.LocalizacaoRepository;
 import br.com.fiap.aquasense.service.AreaRiscoService;
+import br.com.fiap.aquasense.specification.AreaRiscoSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +31,25 @@ public class AreaRiscoController {
     @Autowired
 
     public AreaRiscoService areaRiscoService;
+    @Autowired
+    private AreaRiscoRepository areaRiscoRepository;
+
+
+    @GetMapping
+    @Operation(summary = "Busca de Areas Risco", description = "Busca de Areas Risco com base em filters",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+                    @ApiResponse(responseCode = "400", description = "Requisicao invalida."),
+                    @ApiResponse(responseCode = "404", description = "Enderecos não encontrados.")
+            })
+    public Page<AreaRisco> index(
+            AreaRiscoFilter filter,
+            @PageableDefault(size = 10, sort = "tipoRisco", direction = Sort.Direction.DESC) Pageable pageable
+    ){
+        var specification = AreaRiscoSpecification.withFilters(filter);
+        return areaRiscoRepository.findAll(specification, pageable);
+    }
+
 
     @PostMapping
     @CacheEvict("area-risco")
