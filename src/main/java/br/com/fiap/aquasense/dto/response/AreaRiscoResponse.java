@@ -18,6 +18,8 @@ public class AreaRiscoResponse {
     private String nome;
     private TipoRisco tipoRisco;
     private NivelRisco nivelRisco;
-    private LocalDateTime dataAtualizacao;
-    private Long idLocalizacao;
+    private String observacaoRisco;
+    private double latitude;
+    private double longitude;
+
 }

@@ -16,11 +16,15 @@ import java.time.LocalDateTime;
 @Setter
 public class AreaRiscoRequest {
     @NotBlank @Length(min = 1, max = 100)
-    private String nome;
+    private String nm_area;
     @NotBlank @Enumerated(EnumType.STRING)
-    private TipoRisco tipoRisco;
+    private TipoRisco tp_risco;
     @NotBlank @Enumerated(EnumType.STRING)
-    private NivelRisco nivelRisco;
+    private NivelRisco nv_risco;
+    @NotBlank
+    private String ds_observacao_risco;
     @NotNull
-    private Long idLocalizacao;
+    private double latitude;
+    @NotNull
+    private double longitude;
 }

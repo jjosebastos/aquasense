@@ -29,7 +29,7 @@ public class AreaRiscoController {
                     @ApiResponse(responseCode = "200", description = "Concluído com sucesso"),
                     @ApiResponse(responseCode = "400", description = "Requisição inválida"),
             })
-    public ResponseEntity<AreaRiscoResponse> create(@RequestBody AreaRiscoRequest areaRiscoRequest) {
+    public ResponseEntity<List<AreaRiscoResponse>> create(@RequestBody List<AreaRiscoRequest> areaRiscoRequest) {
         var savedAreaRisco = areaRiscoService.save(areaRiscoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAreaRisco);
     }

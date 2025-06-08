@@ -18,9 +18,7 @@ public class GeminiController {
 
     @PostMapping("/gemini/chat")
     public Mono<String> getGemini(@RequestBody String request) {
-        var chat = geminiAIService.generateText(request);
-        System.out.println(chat);
-        return chat;
+    return geminiAIService.generateText(request);
     }
 
     @PostMapping("/gemini/test")

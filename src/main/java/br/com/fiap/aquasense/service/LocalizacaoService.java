@@ -38,6 +38,29 @@ public class LocalizacaoService {
         return toLocalizacaoResponse(localizacaoSaved);
     }
 
+    @Transactional
+    public LocalizacaoResponse update(@PathVariable Long id,
+                                      @RequestBody LocalizacaoRequest request) {
+        var localizacaoFound = this.localizacaoRepository.findById(id)
+                .orElseThrow();
+        var usuarioFound = this.usuarioRepository.findById(request.getIdUsuario())
+                .orElseThrow();
+        localizacaoFound.setNome(request.getNome());
+        localizacaoFound.setLatitude(request.getLatitude());
+        localizacaoFound.setLongitude(request.getLongitude());
+        localizacaoFound.setDataUltimaAtualizacao(request.getDataUltimaAtualizacao());
+        localizacaoFound.setStatus(request.getStatus());
+        localizacaoFound.setUsuario(usuarioFound);
+        var localizacaoSaved = this.localizacaoRepository.save(localizacaoFound);
+        return toLocalizacaoResponse(localizacaoSaved);
+    }
+
+    @Transactional
+    public void delete(@PathVariable Long id) {
+        var localizacaoFound = this.localizacaoRepository.findById(id)
+                .orElseThrow();
+        this.localizacaoRepository.deleteById(id);
+    }
 
 
     public LocalizacaoResponse findById(@PathVariable Long id) {

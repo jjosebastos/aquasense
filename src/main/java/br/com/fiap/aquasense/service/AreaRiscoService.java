@@ -4,7 +4,6 @@ import br.com.fiap.aquasense.dto.request.AreaRiscoRequest;
 import br.com.fiap.aquasense.dto.response.AreaRiscoResponse;
 import br.com.fiap.aquasense.model.AreaRisco;
 import br.com.fiap.aquasense.repository.AreaRiscoRepository;
-import br.com.fiap.aquasense.repository.LocalizacaoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,36 +16,32 @@ import java.util.NoSuchElementException;
 public class AreaRiscoService {
     @Autowired
     private AreaRiscoRepository areaRiscoRepository;
-    @Autowired
-    private LocalizacaoRepository localizacaoRepository;
+
 
     @Transactional
-    public AreaRiscoResponse save(AreaRiscoRequest areaRiscoRequest) {
-        var localizacaoId = areaRiscoRequest.getIdLocalizacao();
-        var localizacaoFound = localizacaoRepository.findById(localizacaoId)
-                .orElseThrow();
-        var areaRisco = new AreaRisco();
-        areaRisco.setNome(areaRiscoRequest.getNome());
-        areaRisco.setNivelRisco(areaRiscoRequest.getNivelRisco());
-        areaRisco.setTipoRisco(areaRiscoRequest.getTipoRisco());
-        areaRisco.setFlagAtivo("S");
-        areaRisco.setLocalizacao(localizacaoFound);
-        var savedAreaRisco = areaRiscoRepository.save(areaRisco);
-        return toAreaRiscoResponse(savedAreaRisco);
+    public List<AreaRiscoResponse> save(List<AreaRiscoRequest> areaRiscoRequest) {
+        var saveListAreaRisco = areaRiscoRequest.stream()
+                .map(this::mapperAreaRisco)
+                .map(areaRiscoRepository::save)
+                .toList();
+        return saveListAreaRisco.stream()
+                .map(this::toAreaRiscoResponse)
+                .toList();
     }
 
     @Transactional
-    public AreaRiscoResponse update(Long idAreaRisco, AreaRiscoRequest areaRiscoRequest) {
-        var idLocalizacao = areaRiscoRequest.getIdLocalizacao();
-        var localizacaoFound = localizacaoRepository.findById(idLocalizacao)
-                .orElseThrow();
-        var areaRiscoFound = getAreaRiscoById(idAreaRisco);
-        areaRiscoFound.setNome(areaRiscoRequest.getNome());
-        areaRiscoFound.setTipoRisco(areaRiscoRequest.getTipoRisco());
-        areaRiscoFound.setNivelRisco(areaRiscoRequest.getNivelRisco());
-        areaRiscoFound.setDataAtualizacao(LocalDateTime.now());
-        areaRiscoFound.setLocalizacao(localizacaoFound);
-        var updatedAreaRisco = areaRiscoRepository.save(areaRiscoFound);
+    public AreaRiscoResponse update(Long id, AreaRiscoRequest areaRiscoRequest) {
+        AreaRisco existingAreaRisco = areaRiscoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Área de risco não encontrada para o ID: " + id));
+
+        existingAreaRisco.setNomeArea(areaRiscoRequest.getNm_area());
+        existingAreaRisco.setTipoRisco(areaRiscoRequest.getTp_risco());
+        existingAreaRisco.setNivelRisco(areaRiscoRequest.getNv_risco());
+        existingAreaRisco.setObservacaoRisco(areaRiscoRequest.getDs_observacao_risco());
+        existingAreaRisco.setLatitude(areaRiscoRequest.getLatitude());
+        existingAreaRisco.setLongitude(areaRiscoRequest.getLongitude());
+        existingAreaRisco.setDataAtualizacao(LocalDateTime.now());
+        AreaRisco updatedAreaRisco = areaRiscoRepository.save(existingAreaRisco);
         return toAreaRiscoResponse(updatedAreaRisco);
     }
 
@@ -72,14 +67,29 @@ public class AreaRiscoService {
     public AreaRiscoResponse getById(Long idAreaRisco) {
         return toAreaRiscoResponse(this.getAreaRiscoById(idAreaRisco));
     }
+
+    private AreaRisco mapperAreaRisco(AreaRiscoRequest areaRiscoRequest) {
+        return AreaRisco.builder()
+                .nomeArea(areaRiscoRequest.getNm_area())
+                .observacaoRisco(areaRiscoRequest.getDs_observacao_risco())
+                .nivelRisco(areaRiscoRequest.getNv_risco())
+                .tipoRisco(areaRiscoRequest.getTp_risco())
+                .latitude(areaRiscoRequest.getLatitude())
+                .longitude(areaRiscoRequest.getLongitude())
+                .flagAtivo("S")
+                .dataAtualizacao(LocalDateTime.now())
+                .build();
+    }
+
     private AreaRiscoResponse toAreaRiscoResponse(AreaRisco areaRisco) {
         return AreaRiscoResponse.builder()
                 .idAreaRisco(areaRisco.getIdAreaRisco())
-                .nome(areaRisco.getNome())
+                .nome(areaRisco.getNomeArea())
                 .tipoRisco(areaRisco.getTipoRisco())
                 .nivelRisco(areaRisco.getNivelRisco())
-                .dataAtualizacao(areaRisco.getDataAtualizacao())
-                .idLocalizacao(areaRisco.getLocalizacao().getIdLocalizacao())
+                .observacaoRisco(areaRisco.getObservacaoRisco())
+                .latitude(areaRisco.getLatitude())
+                .longitude(areaRisco.getLongitude())
                 .build();
     }
 

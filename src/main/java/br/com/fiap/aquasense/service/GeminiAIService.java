@@ -120,53 +120,6 @@ public class GeminiAIService {
     }
 
 
-    public Mono<List<AreaRisco>> processAndStoreRiskAreasFromGemini(String promptParaGemini) {
-        return callGeminiApiAndParseRiskResponse(promptParaGemini)
-                .flatMapMany(riscoDataList -> { // flatMapMany para processar cada item da lista reativamente
-                    if (riscoDataList == null || riscoDataList.isEmpty()) {
-                        log.info("Nenhuma área de risco retornada pelo Gemini para o prompt: {}", promptParaGemini);
-                        return Mono.empty(); // Retorna um Mono vazio se a lista for nula ou vazia
-                    }
-                    // Converte a lista de AreaRiscoData para um Flux de AreaRiscoData
-                    return Flux.fromIterable(riscoDataList);
-                })
-                .flatMap(riscoData -> { // Para cada AreaRiscoData...
-                    // 1. Tenta encontrar ou criar a Localizacao
-                    return localizacaoService.findByLatitudeAndLongitude(riscoData.getLatitude(), riscoData.getLongitude())
-                            .switchIfEmpty(Mono.defer(() -> { // Se não encontrar, cria uma nova Localizacao
-                                log.info("Localizacao não encontrada para {}, criando nova.", riscoData.getNm_area());
-                                return localizacaoService.save(Localizacao.builder()
-                                        .latitude(riscoData.getLatitude())
-                                        .longitude(riscoData.getLongitude())
-                                        .nome(riscoData.getNm_area()) // Usando nome da área como nome da localização inicialmente
-                                        .build());
-                            }))
-                            .flatMap(localizacao -> {
-                                // 2. Mapeia AreaRiscoData para AreaRisco
-                                AreaRisco areaRisco = mapToAreaRiscoEntity(riscoData, localizacao);
-
-                                // 3. Salva a AreaRisco
-                                log.info("Salvando AreaRisco: {}", areaRisco.getNome());
-                                return areaRiscoService.save(areaRisco);
-                            })
-                            .onErrorResume(e -> {
-                                log.error("Erro ao processar ou salvar AreaRisco para {}: {}", riscoData.getNm_area(), e.getMessage(), e);
-                                return Mono.empty(); // Continua processando outros itens mesmo se um falhar
-                            });
-                })
-                .collectList(); // Coleta todos os Monos resultantes em uma única lista
-    }
-
-    private AreaRisco mapToAreaRiscoEntity(AreaRiscoData riscoData, Localizacao localizacao) {
-        return AreaRisco.builder()
-                .nome(riscoData.getNmLocalGeral())
-                .tipoRisco(TipoRisco.fromString(riscoData.getTp_risco())) // Converte String para Enum
-                .nivelRisco(NivelRisco.fromString(riscoData.getNv_risco())) // Converte String para Enum
-                .dataAtualizacao(LocalDateTime.now()) // Define a data de atualização como agora
-                .flagAtivo("S") // Exemplo de flag. Ajuste conforme sua regra.
-                .localizacao(localizacao) // Associa a localização encontrada/criada
-                .build();
-    }
 
     // --- Método para consulta simples (chat) ---
     public Mono<String> generateText(String userQuery) {

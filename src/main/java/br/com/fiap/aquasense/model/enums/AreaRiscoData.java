@@ -8,29 +8,22 @@ import lombok.Setter;
 @Setter
 public class AreaRiscoData {
 
-    @JsonProperty("nm_local")
-    private String nmLocalGeral; // Nome do local mais abrangente
+    @JsonProperty("nm_area") // Mapeia para a chave "nm_area" no JSON do Gemini
+    private String nmArea; // Nome da área de risco específica, conforme a T_AS_AREA_RISCO
 
-    @JsonProperty("latitude")
-    private Double latitude;
-
-    @JsonProperty("longitude")
-    private Double longitude;
-
-    // Campos que vão para T_AS_AREA_RISCO (e o id_localizacao será setado depois)
-    @JsonProperty("nm_area")
-    private String nmAreaEspecifica; // Nome da área de risco específica
-
-    @JsonProperty("tp_risco")
+    @JsonProperty("tp_risco") // Mapeia para a chave "tp_risco" no JSON do Gemini
     private String tpRisco;
 
-    @JsonProperty("nv_risco")
+    @JsonProperty("nv_risco") // Mapeia para a chave "nv_risco" no JSON do Gemini
     private String nvRisco;
 
-    @JsonProperty("ds_observacao_risco")
+    @JsonProperty("ds_observacao_risco") // Mapeia para a chave "ds_observacao_risco" no JSON do Gemini
     private String dsObservacaoRisco;
 
-    // Campo que será preenchido após a persistência em T_AS_LOCALIZACAO
-    private Long idLocalizacao; // Chave estrangeira para T_AS_LOCALIZACAO
+    @JsonProperty("latitude") // Mapeia para a chave "latitude" no JSON do Gemini
+    private Double latitude;
+
+    @JsonProperty("longitude") // Mapeia para a chave "longitude" no JSON do Gemini
+    private Double longitude;
 
 }

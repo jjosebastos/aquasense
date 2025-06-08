@@ -10,5 +10,4 @@ import java.util.Optional;
 
 public interface LocalizacaoRepository extends JpaRepository<Localizacao, Long> {
 
-    Mono<Localizacao> findByLatitudeAndLongitude(Double latitude, Double longitude);
 }
